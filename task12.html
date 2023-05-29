@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        //updateLastUserActivityTime
+        const Posts=[{title:'Post1'},{title:'Post2'}];
+
+        function getpost(){
+            Posts.forEach((item)=>{
+                console.log(item.title);
+                console
+            })
+        }
+
+
+        function updateLastUserActivity() {
+        return new Promise( (resolve,reject)=>{
+            setTimeout( ()=>{
+                resolve(new Date().getTime());
+            })
+            },1000)
+        }
+
+        function createPost(postx)
+        {
+            return new Promise ((resolve,reject)=>{
+            setTimeout(()=>{
+            Posts.push(postx)
+                resolve();
+            },2000)
+        })
+        }
+
+
+        function deletePost() 
+        {
+        return new Promise ((resolve,reject)=>{
+            setTimeout(()=>{  
+            if(Posts.length>0)
+            {
+            let pop1= Posts.pop()
+                resolve(pop1.title);
+            }
+            else{
+                reject("ERROR:Post is empty")
+            }
+            },2000)
+        })
+        }
+
+
+
+        Promise.all([createPost({title:"post3"}),updateLastUserActivity()])
+        .then((data)=>{
+            console.log("last activity time: "+data)
+            getpost()})
+        .then(()=>{return deletePost()}).then((deleted)=>{console.log("deleted:"+deleted)})
+        .then(()=>{getpost()})
+        .catch(err => console.log(err))
+
+    </script>
+</body>
+</html>
